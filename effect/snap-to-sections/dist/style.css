@@ -1,0 +1,15 @@
+html,
+body {
+  height: auto;
+}
+.panel {
+  height: 100vh;
+  top: 0;
+  will-change: transform;
+}
+
+.scroll-down {
+  bottom: auto;
+  top: 6vh;
+  position: relative;
+}

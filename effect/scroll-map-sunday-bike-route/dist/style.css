@@ -1,0 +1,22 @@
+html, body {
+  width:100%;
+  height:100%;
+  overflow-x:hidden;
+  background:#f2efe9;
+}
+
+div, svg, img {
+  position:absolute;
+}
+
+#container {
+  opacity:0;
+  position:fixed;
+  width:7900px;
+  height:5600px;
+}
+
+#scrollDist {
+  width:100%;
+  height:500%;
+}
