@@ -41,7 +41,6 @@
 - [https://www.silencio.es/](https://www.silencio.es/)
 - [https://www.chenwei-med.com/](https://www.chenwei-med.com/)
 - [https://genyroad.com/](https://genyroad.com/)
-- [https://cn.eastpes.com/](https://cn.eastpes.com/)
 - [https://tatugroup.cn/](https://tatugroup.cn/)
 - [https://www.singularxyz.com/](https://www.singularxyz.com/)
 - [https://www.newlandnpt.com/](https://www.newlandnpt.com/)
