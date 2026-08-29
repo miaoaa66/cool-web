@@ -1,0 +1,274 @@
+input[type="radio"]{
+  display:none;
+}
+#cheat{
+  position:absolute;
+  bottom:0;
+  right:0;
+}
+#cheat:checked ~ input[type="radio"]{
+  display:block;
+}
+#cheat:checked ~ input[type="radio"]::after{
+  content:attr(id);
+  color:#fff;
+  display:block;
+  padding-left:1em;
+  width:30em;
+}
+#a-up,#a-left,#b-up,#b-center,#c-up,#c-right,#d-middle,#d-left,#e-middle,#e-center,
+#f-middle,#f-right,#g-down,#g-left,#h-down,#h-center{
+  outline:2px solid red;
+}
+body{
+  margin:0;
+  background:#222;
+  text-align:center;
+}
+.board{
+  font-size:1vmin;
+  outline:2em solid #333;
+  width:60em;
+  height:60em;
+  position:absolute;
+  left:calc(50% - 30em);
+  top:calc(50% - 30em);
+  overflow:hidden;
+}
+[class^=peice]{
+  --x:20em;
+  position:absolute;
+  width:20em;
+  height:20em;
+  transform:translate(var(--x),var(--y));
+  transition:transform .5s;
+}
+[class^=peice].img{
+  background-size:60em 60em;
+  border-radius:2em;
+  box-shadow:inset 0 0 0em .2em #eee, 
+    inset 1em 1em 1em #eee5,
+    inset -1em -1em 1em #0005;
+  box-sizing:box-border;
+}
+.peice-a.img{
+  background-position:top left;
+}
+.peice-b.img{
+  background-position:top center;
+}
+.peice-c.img{
+  background-position:top right;
+}
+.peice-d.img{
+  background-position:center left;
+}
+.peice-e.img{
+  background-position:center center;
+}
+.peice-f.img{
+  background-position:center right;
+}
+.peice-g.img{
+  background-position:bottom left;
+}
+.peice-h.img{
+  background-position:bottom center;
+}
+[class^=peice] label{
+  display:block;
+  width: 13em;
+  height: 13em;
+  position:absolute;
+  transform:rotate(45deg);
+  background:#444;
+}
+[class^=peice] label:hover{
+  background:#666;
+  outline:.5em solid #111;
+}
+[class^=peice] label[for$="up"]{
+  top: -6em;
+  left:3.5em;
+}
+[class^=peice] label[for$="middle"]{
+  display:none;
+  z-index:5;
+  left:3.5em;
+}
+[class^=peice] label[for$="down"]{
+  bottom: -6em;
+  left:3.5em;
+}
+[class^=peice] label[for$="left"]{
+  left: -6em;
+  top:3.5em;
+}
+[class^=peice] label[for$="center"]{
+  display:none;
+  z-index:5;
+  top:3.5em;
+}
+[class^=peice] label[for$="right"]{
+  right: -6em;
+  top:3.5em;
+}
+
+#a-up:checked ~* [for="a-middle"],
+#b-up:checked ~* [for="b-middle"],
+#c-up:checked ~* [for="c-middle"],
+#d-up:checked ~* [for="d-middle"],
+#e-up:checked ~* [for="e-middle"],
+#f-up:checked ~* [for="f-middle"],
+#g-up:checked ~* [for="g-middle"],
+#h-up:checked ~* [for="h-middle"]{
+  display:block;
+  transform:translate(0,13em) rotate(45deg);
+}
+#a-down:checked ~* [for="a-middle"],
+#b-down:checked ~* [for="b-middle"],
+#c-down:checked ~* [for="c-middle"],
+#d-down:checked ~* [for="d-middle"],
+#e-down:checked ~* [for="e-middle"],
+#f-down:checked ~* [for="f-middle"],
+#g-down:checked ~* [for="g-middle"],
+#h-down:checked ~* [for="h-middle"]{
+  display:block;
+  transform:translate(0,-6em) rotate(45deg);
+}
+#a-left:checked ~* [for="a-center"],
+#b-left:checked ~* [for="b-center"],
+#c-left:checked ~* [for="c-center"],
+#d-left:checked ~* [for="d-center"],
+#e-left:checked ~* [for="e-center"],
+#f-left:checked ~* [for="f-center"],
+#g-left:checked ~* [for="g-center"],
+#h-left:checked ~* [for="h-center"]{
+  display:block;
+  transform:translate(13em,0) rotate(45deg);
+}
+#a-right:checked ~* [for="a-center"],
+#b-right:checked ~* [for="b-center"],
+#c-right:checked ~* [for="c-center"],
+#d-right:checked ~* [for="d-center"],
+#e-right:checked ~* [for="e-center"],
+#f-right:checked ~* [for="f-center"],
+#g-right:checked ~* [for="g-center"],
+#h-right:checked ~* [for="h-center"]{
+  display:block;
+  transform:translate(-6em,0) rotate(45deg);
+}
+
+#a-up:checked ~ * .peice-a,
+#b-up:checked ~ * .peice-b,
+#c-up:checked ~ * .peice-c,
+#d-up:checked ~ * .peice-d,
+#e-up:checked ~ * .peice-e,
+#f-up:checked ~ * .peice-f,
+#g-up:checked ~ * .peice-g,
+#h-up:checked ~ * .peice-h{
+  --y:0;
+}
+#a-middle:checked ~ * .peice-a,
+#b-middle:checked ~ * .peice-b,
+#c-middle:checked ~ * .peice-c,
+#d-middle:checked ~ * .peice-d,
+#e-middle:checked ~ * .peice-e,
+#f-middle:checked ~ * .peice-f,
+#g-middle:checked ~ * .peice-g,
+#h-middle:checked ~ * .peice-h{
+  --y:20em;
+}
+#a-down:checked ~ * .peice-a,
+#b-down:checked ~ * .peice-b,
+#c-down:checked ~ * .peice-c,
+#d-down:checked ~ * .peice-d,
+#e-down:checked ~ * .peice-e,
+#f-down:checked ~ * .peice-f,
+#g-down:checked ~ * .peice-g,
+#h-down:checked ~ * .peice-h{
+  --y:40em;
+}
+#a-left:checked ~ * .peice-a,
+#b-left:checked ~ * .peice-b,
+#c-left:checked ~ * .peice-c,
+#d-left:checked ~ * .peice-d,
+#e-left:checked ~ * .peice-e,
+#f-left:checked ~ * .peice-f,
+#g-left:checked ~ * .peice-g,
+#h-left:checked ~ * .peice-h{
+  --x:0;
+}
+#a-center:checked ~ * .peice-a,
+#b-center:checked ~ * .peice-b,
+#c-center:checked ~ * .peice-c,
+#d-center:checked ~ * .peice-d,
+#e-center:checked ~ * .peice-e,
+#f-center:checked ~ * .peice-f,
+#g-center:checked ~ * .peice-g,
+#h-center:checked ~ * .peice-h{
+  --x:20em;
+}
+#a-right:checked ~ * .peice-a,
+#b-right:checked ~ * .peice-b,
+#c-right:checked ~ * .peice-c,
+#d-right:checked ~ * .peice-d,
+#e-right:checked ~ * .peice-e,
+#f-right:checked ~ * .peice-f,
+#g-right:checked ~ * .peice-g,
+#h-right:checked ~ * .peice-h{
+  --x:40em;
+}
+.winner{
+  font-family:arial;
+  color: #fff;
+  text-align: center;
+  font-size: 4vw;
+  z-index: 100;
+  width:100%;
+  height:2em;
+  position:absolute;
+  top:calc(50% - 1em);
+  line-height: 2em;
+  background: red;
+  transform:scale(0);
+}
+#a-up:checked ~ #a-left:checked ~ #b-up:checked ~ #b-center:checked ~ #c-up:checked ~ #c-right:checked ~ #d-middle:checked ~ #d-left:checked ~ #e-middle:checked ~ #e-center:checked ~ #f-middle:checked ~ #f-right:checked ~ #g-down:checked ~ #g-left:checked ~ #h-down:checked ~ #h-center:checked ~ .winner{
+  -webkit-animation:winner 3s 1 1s;
+          animation:winner 3s 1 1s;
+}
+@-webkit-keyframes winner{
+  0%,100%{transform:scale(0);}
+  10%,90%{transform:scale(1);}
+}
+@keyframes winner{
+  0%,100%{transform:scale(0);}
+  10%,90%{transform:scale(1);}
+}
+
+.selectBG{
+  display:inline-block;
+  font-family:arial;
+  font-size:2vmin;
+  width:8em;
+  text-align:center;
+  padding:1em 0;
+  background:#000;
+  color:#fff;
+  border:.25em solid #333;
+  margin:2em .25em;
+}
+#cage:checked ~ *[for="cage"],
+#cageAnim:checked ~ *[for="cageAnim"],
+#cageKitten:checked ~ *[for="cageKitten"]{
+  border-bottom-color:teal;
+}
+#cage:checked ~ * [class^=peice].img{
+  background-image:url(https://placekitten.com/1000/1000);
+}
+#cageAnim:checked ~ * [class^=peice].img{
+  background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/51773/cagedance.gif);
+}  
+#cageKitten:checked ~ * [class^=peice].img{
+  background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/51773/kittencage.jpg);
+}

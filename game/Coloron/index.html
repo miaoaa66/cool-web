@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Coloron</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+  <div class="splash"></div>
+  <div class="container">
+
+    <div class="start-game game-full-flex" id="start-game">
+
+      <div class="start-game-top">
+      </div>
+
+      <div class="logo-holder">
+        <p class="logo">
+          <span>C</span>
+          <span>o</span>
+          <span>l</span>
+          <span>o</span>
+          <span>r</span>
+          <span>o</span>
+          <span>n</span>
+        </p>
+        <a class="play-button" href="#" onclick="game.start()">开始</a>
+        <h4 class="hint">提示: <span>红</span> 颜色永远是第一</h4>
+      </div>
+
+      <div class="how-to-play">
+        <div class="section section-1">
+          <h4>弹跳球<br>改变颜色</h4>
+          <div class="content">
+            <div class="ball-demo" id="ball-demo"></div>
+          </div>
+        </div>
+        <div class="section section-2">
+          <h4>点击柱子切换颜色<br>(红, 黄, 紫)</h4>
+          <div class="content">
+            <div class="bar bar-1" data-index="0"></div>
+            <div class="bar bar-2"></div>
+            <div class="bar bar-3"></div>
+          </div>
+        </div>
+        <div class="section section-3">
+          <h4>始终匹配<br>球和柱子的颜色</h4>
+          <div class="content">
+            <div class="ball-demo" id="ball-demo"></div>
+            <div class="bar bar-1"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="stop-game game-full-flex">
+
+      <div class="score-container">
+
+        <h1>Coloron</h1>
+
+        <div class="final-score"></div>
+        <div class="result"></div>
+
+        <div>
+          <a class="play-again" href="#" onclick="game.start()">重新开始</a>
+          <a class="main-menu" href="#" onclick="game.intro()">菜单</a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="small-glows"></div>
+
+    <div class="glow">
+      <div class="sun"></div>
+    </div>
+
+    <div class="waves">
+      <div class="top_wave"></div>
+      <div class="wave1"></div>
+      <div class="wave2"></div>
+      <div class="wave3"></div>
+      <div class="wave4"></div>
+    </div>
+
+    <div class="mounts">
+      <div class="mount1"></div>
+      <div class="mount2"></div>
+    </div>
+
+    <div class="clouds"></div>
+
+    <div class="scene">
+      <div class="learn-to-play">点击柱子改变颜色!</div>
+      <div class="score" id="score"></div>
+      <div class="ball-holder"></div>
+      <div class="sticks" id="sticks"></div>
+    </div>
+
+    <div class="noise"></div>
+
+  </div>
+
+
+  <script src="./jquery-3.1.1.min.js"></script>
+  <script src="./TweenMax.min.js"></script>
+  <script src="./script.js"></script>
+
+
+</body>
+
+</html>
