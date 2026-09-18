@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>108 键盘</title>
+</head>
+<body>
+  <div class="keyboard-container">
+    <div class="keyboard" id="keyboard">
+
+      <!-- Function Row -->
+      <div class="kb-row kb-row-func">
+        <div class="kb-func-group">
+          <div class="key key-func" data-key="Escape">Esc</div>
+        </div>
+        <div class="kb-func-group">
+          <div class="key key-func" data-key="F1">F1</div>
+          <div class="key key-func" data-key="F2">F2</div>
+          <div class="key key-func" data-key="F3">F3</div>
+          <div class="key key-func" data-key="F4">F4</div>
+        </div>
+        <div class="kb-func-group">
+          <div class="key key-func" data-key="F5">F5</div>
+          <div class="key key-func" data-key="F6">F6</div>
+          <div class="key key-func" data-key="F7">F7</div>
+          <div class="key key-func" data-key="F8">F8</div>
+        </div>
+        <div class="kb-func-group">
+          <div class="key key-func" data-key="F9">F9</div>
+          <div class="key key-func" data-key="F10">F10</div>
+          <div class="key key-func" data-key="F11">F11</div>
+          <div class="key key-func" data-key="F12">F12</div>
+        </div>
+        <div class="kb-func-group">
+          <div class="key key-func" data-key="PrintScreen">Print</br>Screen</br>SysRq</div>
+          <div class="key key-func" data-key="ScrollLock">Scroll</br>Lock</div>
+          <div class="key key-func" data-key="Pause">Pause</div>
+        </div>
+      </div>
+
+      <!-- Main area: three columns -->
+      <div class="kb-main">
+
+        <!-- Column 1: Typing area (5 rows) -->
+        <div class="kb-col kb-typing">
+          <div class="kb-row">
+            <div class="key key-num" data-key="`"><div class="key-top">~</div><div class="key-bot">`</div></div>
+            <div class="key key-num" data-key="1"><div class="key-top">!</div><div class="key-bot">1</div></div>
+            <div class="key key-num" data-key="2"><div class="key-top">@</div><div class="key-bot">2</div></div>
+            <div class="key key-num" data-key="3"><div class="key-top">#</div><div class="key-bot">3</div></div>
+            <div class="key key-num" data-key="4"><div class="key-top">$</div><div class="key-bot">4</div></div>
+            <div class="key key-num" data-key="5"><div class="key-top">%</div><div class="key-bot">5</div></div>
+            <div class="key key-num" data-key="6"><div class="key-top">^</div><div class="key-bot">6</div></div>
+            <div class="key key-num" data-key="7"><div class="key-top">&amp;</div><div class="key-bot">7</div></div>
+            <div class="key key-num" data-key="8"><div class="key-top">*</div><div class="key-bot">8</div></div>
+            <div class="key key-num" data-key="9"><div class="key-top">(</div><div class="key-bot">9</div></div>
+            <div class="key key-num" data-key="0"><div class="key-top">)</div><div class="key-bot">0</div></div>
+            <div class="key key-num" data-key="-"><div class="key-top">_</div><div class="key-bot">-</div></div>
+            <div class="key key-num" data-key="="><div class="key-top">+</div><div class="key-bot">=</div></div>
+            <div class="key key-wide-2" data-key="Backspace">⌫</div>
+          </div>
+          <div class="kb-row">
+            <div class="key key-wide-1-5" data-key="Tab">Tab</div>
+            <div class="key key-letter" data-key="Q">Q</div>
+            <div class="key key-letter" data-key="W">W</div>
+            <div class="key key-letter" data-key="E">E</div>
+            <div class="key key-letter" data-key="R">R</div>
+            <div class="key key-letter" data-key="T">T</div>
+            <div class="key key-letter" data-key="Y">Y</div>
+            <div class="key key-letter" data-key="U">U</div>
+            <div class="key key-letter" data-key="I">I</div>
+            <div class="key key-letter" data-key="O">O</div>
+            <div class="key key-letter" data-key="P">P</div>
+            <div class="key key-num" data-key="["><div class="key-top">{</div><div class="key-bot">[</div></div>
+            <div class="key key-num" data-key="]"><div class="key-top">}</div><div class="key-bot">]</div></div>
+            <div class="key key-wide-1-5" data-key="\"><div class="key-top">|</div><div class="key-bot">\</div></div>
+          </div>
+          <div class="kb-row">
+            <div class="key key-wide-1-75" data-key="CapsLock">Caps Lock</div>
+            <div class="key key-letter" data-key="A">A</div>
+            <div class="key key-letter" data-key="S">S</div>
+            <div class="key key-letter" data-key="D">D</div>
+            <div class="key key-letter" data-key="F">F</div>
+            <div class="key key-letter" data-key="G">G</div>
+            <div class="key key-letter" data-key="H">H</div>
+            <div class="key key-letter" data-key="J">J</div>
+            <div class="key key-letter" data-key="K">K</div>
+            <div class="key key-letter" data-key="L">L</div>
+            <div class="key key-num" data-key=";"><div class="key-top">:</div><div class="key-bot">;</div></div>
+            <div class="key key-num" data-key="'"><div class="key-top">"</div><div class="key-bot">'</div></div>
+            <div class="key key-wide-2-25" data-key="Enter">Enter</div>
+          </div>
+          <div class="kb-row">
+            <div class="key key-wide-2-25" data-key="ShiftLeft">Shift</div>
+            <div class="key key-letter" data-key="Z">Z</div>
+            <div class="key key-letter" data-key="X">X</div>
+            <div class="key key-letter" data-key="C">C</div>
+            <div class="key key-letter" data-key="V">V</div>
+            <div class="key key-letter" data-key="B">B</div>
+            <div class="key key-letter" data-key="N">N</div>
+            <div class="key key-letter" data-key="M">M</div>
+            <div class="key key-num" data-key=","><div class="key-top"><</div><div class="key-bot">,</div></div>
+            <div class="key key-num" data-key="."><div class="key-top">></div><div class="key-bot">.</div></div>
+            <div class="key key-num" data-key="/"><div class="key-top">?</div><div class="key-bot">/</div></div>
+            <div class="key key-wide-2-75" data-key="ShiftRight">Shift</div>
+          </div>
+          <div class="kb-row">
+            <div class="key key-wide-1-25 key-mod" data-key="ControlLeft">Ctrl</div>
+            <div class="key key-wide-1-25 key-mod" data-key="MetaLeft">Win</div>
+            <div class="key key-wide-1-25 key-mod" data-key="AltLeft">Alt</div>
+            <div class="key key-wide-6-25" data-key="Space">Space</div>
+            <div class="key key-wide-1-25 key-mod" data-key="AltRight">Alt</div>
+            <div class="key key-wide-1-25 key-mod" data-key="MetaRight">Win</div>
+            <div class="key key-wide-1-25 key-mod" data-key="ContextMenu">≡</div>
+            <div class="key key-wide-1-25 key-mod" data-key="ControlRight">Ctrl</div>
+          </div>
+        </div>
+
+        <!-- Column 2: Navigation + Arrow cluster -->
+        <div class="kb-col kb-cluster">
+          <div class="kb-row kb-row-cluster">
+            <div class="key key-nav" data-key="Insert">Insert</div>
+            <div class="key key-nav" data-key="Home">Home</div>
+            <div class="key key-nav" data-key="PageUp">Page</br>Up</div>
+          </div>
+          <div class="kb-row kb-row-cluster">
+            <div class="key key-nav" data-key="Delete">Delete</div>
+            <div class="key key-nav" data-key="End">End</div>
+            <div class="key key-nav" data-key="PageDown">Page</br>Down</div>
+          </div>
+          <div class="kb-row kb-row-cluster kb-row-empty"></div>
+          <div class="kb-row kb-row-cluster kb-row-arrow-up">
+            <div class="key key-empty"></div>
+            <div class="key key-arrow" data-key="ArrowUp">▲</div>
+            <div class="key key-empty"></div>
+          </div>
+          <div class="kb-row kb-row-cluster">
+            <div class="key key-arrow" data-key="ArrowLeft">◀</div>
+            <div class="key key-arrow" data-key="ArrowDown">▼</div>
+            <div class="key key-arrow" data-key="ArrowRight">▶</div>
+          </div>
+        </div>
+
+        <!-- Column 3: Numpad -->
+        <div class="kb-col kb-numpad">
+          <div class="key key-func np-c1-r1" data-key="NumLock">Num</div>
+          <div class="key key-num np-c2-r1" data-key="NumpadDivide">/</div>
+          <div class="key key-num np-c3-r1" data-key="NumpadMultiply">*</div>
+          <div class="key key-num np-c4-r1" data-key="NumpadSubtract">-</div>
+
+          <div class="key key-num np-c1-r2" data-key="Numpad7">7</div>
+          <div class="key key-num np-c2-r2" data-key="Numpad8">8</div>
+          <div class="key key-num np-c3-r2" data-key="Numpad9">9</div>
+          <div class="key key-num np-c4-r2-3" data-key="NumpadAdd">+</div>
+
+          <div class="key key-num np-c1-r3" data-key="Numpad4">4</div>
+          <div class="key key-num np-c2-r3" data-key="Numpad5">5</div>
+          <div class="key key-num np-c3-r3" data-key="Numpad6">6</div>
+
+          <div class="key key-num np-c1-r4" data-key="Numpad1">1</div>
+          <div class="key key-num np-c2-r4" data-key="Numpad2">2</div>
+          <div class="key key-num np-c3-r4" data-key="Numpad3">3</div>
+          <div class="key key-enter np-c4-r4-5" data-key="NumpadEnter">Enter</div>
+
+          <div class="key key-num np-c1-2-r5" data-key="Numpad0">0</div>
+          <div class="key key-num np-c3-r5" data-key="NumpadDecimal">.</div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="key-display" id="keyDisplay">
+    <span class="key-display-label">点击键盘按键试试</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

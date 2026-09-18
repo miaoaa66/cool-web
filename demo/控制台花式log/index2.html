@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+  <script>
+    console.clear()
+    let version = '1.1.1'
+    console.log(
+      `%c©%cAirPower%c4T%c${version}%c\n已支持: Web、微信小程序、uni-app\n\n%c🔥🔥🔥AirPower系列开源项目推荐\n
+    %c前端: https://github.com/HammCn/AirPower4T
+    %c后端: https://github.com/HammCn/AirPower4J
+      `,
+      `padding:20px 0px 0px 0px;
+  font-size:24px;font-weight:bold;
+  color:#f39800;`,
+      'font-size:24px;color:#f39800;',
+      'font-size:24px;color:#0083c0;',
+      'font-size:12px;color:#fff;background-color:#ff4500;padding:1px 5px;border-radius:3px;',
+      'font-size:12px;color:#ccc;padding-bottom:50px;',
+
+      'font-size:10px;color:#333;padding-bottom:5px;',
+      'font-size:10px;color:#ccc;padding-bottom:5px;',
+      'font-size:10px;color:#ccc;padding-bottom:5px;',
+    )
+    console.groupCollapsed('%cRuntime', 'font-size:12px;color:#333;font-weight:300;')
+    console.log(
+      `%cVue\t\t\t\t%cv${app.version}`,
+      'font-size:12px;color:#999;',
+      'font-size:12px;color:#333;',
+    )
+    console.log(
+      `%cElement Plus\t%cv${ElementPlus.version}`,
+      'font-size:12px;color:#999;',
+      'font-size:12px;color:#333;',
+    )
+    // console.log(import.meta.env)
+    console.groupEnd()
+    // if (!import.meta.env.DEV) {
+    console.groupCollapsed('%cConsole', 'font-size:12px;color:#333;font-weight:300;')
+    // }
+  </script>
+</body>
+
+</html>

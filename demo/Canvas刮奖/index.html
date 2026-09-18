@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Canvas刮奖</title>
+  <style>
+    .box {
+      width: 300px;
+      height: 200px;
+      overflow: hidden;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .box .mycan {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <canvas class="mycan" id="mycan" width="300" height="200"></canvas>
+  </div>
+  <script>
+    // 获取canvas ID，相当于画布
+    let mycan = document.getElementById("mycan");
+    // 获取canvas 的上下文，相当于 画笔。
+    let ctx = mycan.getContext("2d");
+
+    // 奖品图片
+    let images = [
+      "images/img.png"
+    ];
+
+    // 生成图像对象，作为画笔填充内容。
+    let img = new Image();
+    // img.src = images[Math.floor(Math.random() * 3)];
+    img.src = './img.png';
+    img.width = "100%"
+    img.height = "100%"
+    // 初始化画布，已经画布上的提示文字
+    let intCanvas = function () {
+      ctx.fillStyle = "#999";   // 填充背景色
+      ctx.fillRect(0, 0, mycan.width, mycan.height); // 设置填充范围，跟 canvas 大小一样
+      // 设置刮奖文字：颜色，字体大小，水平居中，文字内容和位置。
+      ctx.fillStyle = "#000";  // 重新设置填充颜色为黑色
+      ctx.font = "40px  'Microsoft Yahei'";
+      ctx.textAlign = "center";
+      ctx.fillText("刮开有惊喜", mycan.width / 2, mycan.height / 2 + 10);
+    };
+
+    // 定义鼠标在canvas上移动的函数
+    let mMove = function (event) {
+      let e = event || window.event;
+      ctx.lineTo(e.offsetX, e.offsetY);  // 画线条到 鼠标位置
+      ctx.stroke();
+    };
+
+    // 鼠标按下函数
+    let mDown = function (event) {
+      let e = event || window.event;
+      // 开始canvas路径
+      ctx.beginPath();
+      // 画笔起笔的地方
+      ctx.moveTo(e.offsetX, e.offsetY);  // 画线条到 鼠标位置
+      // 移动鼠标就作画
+      mycan.addEventListener("mousemove", mMove);
+    };
+
+    // 鼠标松开函数
+    let mUp = function () {
+      // 封闭canvas路径
+      ctx.closePath();
+      // 移除mousemove事件
+      mycan.removeEventListener("mousemove", mMove);
+    };
+
+    // 功能主体部分
+    intCanvas();
+
+    // 因为要保证图片加载完毕，才能执行代码。所以，使用 img.onload 事件。
+    img.onload = function () {
+      // 设置笔触内容为图片，这样画出来的就是图片内容，而不是单纯的色彩线条
+      ctx.strokeStyle = ctx.createPattern(img, 'no-repeat');
+      // 设置画笔的粗细
+      ctx.lineWidth = 50;
+      // 设置线条头尾为圆形。
+      ctx.lineCap = "round";
+      // 设置线条拐点处为圆形
+      ctx.lineJoin = 'round';
+
+      // 鼠标按下，准备开始画画
+      mycan.addEventListener("mousedown", mDown);
+      // 鼠标抬起，停止做画。
+      mycan.addEventListener("mouseup", mUp);
+    };
+  </script>
+</body>
+
+</html>

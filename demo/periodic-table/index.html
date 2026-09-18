@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>元素周期表 · Periodic Table</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="container">
+      <div class="header">
+        <div>
+          <h1>元素周期表</h1>
+          <div class="subtitle">Periodic Table of the Elements · 双击屏幕进入全屏</div>
+        </div>
+        <button class="theme-toggle" @click="toggleTheme">
+          <span class="icon">{{ themeIcon }}</span>
+          <span>{{ themeLabel }}</span>
+        </button>
+      </div>
+      <div class="table-wrapper">
+        <div class="table-grid">
+          <div class="element placeholder" style="grid-column: 3; grid-row: 6;">57-71<br>镧系</div>
+          <div class="element placeholder" style="grid-column: 3; grid-row: 7;">89-103<br>锕系</div>
+          <div v-for="el in elements" :key="el.n" class="element"
+            :class="[el.cat, { active: selectedElement && selectedElement.n === el.n }]"
+            :style="{ gridColumn: el.col, gridRow: el.row }" :data-number="el.n" @click="showDetail(el)">
+            <span class="num">{{ el.n }}</span>
+            <span class="sym">{{ el.s }}</span>
+            <span class="name">{{ el.name }}</span>
+            <span class="mass">{{ el.mass }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-overlay" :class="{ show: showDetailPanel }" @click="hideDetail"></div>
+    <div class="detail-panel" :class="{ show: showDetailPanel }">
+      <button class="detail-close" @click="hideDetail">✕</button>
+      <div class="detail-header" :class="selectedElement ? selectedElement.cat : ''">
+        <div class="d-num">原子序数 {{ selectedElement ? selectedElement.n : '' }}</div>
+        <div class="d-sym">{{ selectedElement ? selectedElement.s : '' }}</div>
+        <div class="d-name">{{ selectedElement ? selectedElement.name : '' }}</div>
+        <div class="d-category" :class="selectedElement ? selectedElement.cat : ''">{{ selectedElement ?
+          catNames[selectedElement.cat] : '' }}</div>
+      </div>
+      <div class="detail-body" v-if="selectedElement">
+        <div class="detail-row"><span class="label">元素符号</span><span class="value">{{ selectedElement.s }}</span></div>
+        <div class="detail-row"><span class="label">中文名称</span><span class="value">{{ selectedElement.name }}</span>
+        </div>
+        <div class="detail-row"><span class="label">原子序数</span><span class="value">{{ selectedElement.n }}</span></div>
+        <div class="detail-row"><span class="label">相对原子质量</span><span class="value">{{ selectedElement.mass }}</span>
+        </div>
+        <div class="detail-row"><span class="label">元素类别</span><span class="value">{{ catNames[selectedElement.cat]
+            }}</span></div>
+        <div class="detail-row"><span class="label">电子构型</span><span class="value wide">{{ selectedElement.ec }}</span>
+        </div>
+        <div class="detail-row"><span class="label">熔点</span><span class="value">{{ selectedElement.mp }}</span></div>
+        <div class="detail-row"><span class="label">沸点</span><span class="value">{{ selectedElement.bp }}</span></div>
+      </div>
+    </div>
+    <div class="hint">点击元素查看详情 · 双击任意位置切换全屏</div>
+  </div>
+  <script src="static/vue.2.6.14.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        elements: [
+          { n: 1, s: "H", name: "氢", cat: "nonmetal", mass: "1.008", ec: "1s1", mp: "-259.16 °C", bp: "-252.8 °C", col: 1, row: 1 },
+          { n: 2, s: "He", name: "氦", cat: "noble", mass: "4.0026", ec: "1s2", mp: "-272.2 °C", bp: "-268.9 °C", col: 18, row: 1 },
+          { n: 3, s: "Li", name: "锂", cat: "alkali", mass: "6.94", ec: "[He] 2s1", mp: "180.54 °C", bp: "1342 °C", col: 1, row: 2 },
+          { n: 4, s: "Be", name: "铍", cat: "alkaline", mass: "9.0122", ec: "[He] 2s2", mp: "1287 °C", bp: "2469 °C", col: 2, row: 2 },
+          { n: 5, s: "B", name: "硼", cat: "metalloid", mass: "10.81", ec: "[He] 2s2 2p1", mp: "2076 °C", bp: "3927 °C", col: 13, row: 2 },
+          { n: 6, s: "C", name: "碳", cat: "nonmetal", mass: "12.011", ec: "[He] 2s2 2p2", mp: "3550 °C (升华)", bp: "4027 °C", col: 14, row: 2 },
+          { n: 7, s: "N", name: "氮", cat: "nonmetal", mass: "14.007", ec: "[He] 2s2 2p3", mp: "-210 °C", bp: "-195.8 °C", col: 15, row: 2 },
+          { n: 8, s: "O", name: "氧", cat: "nonmetal", mass: "15.999", ec: "[He] 2s2 2p4", mp: "-218.79 °C", bp: "-182.96 °C", col: 16, row: 2 },
+          { n: 9, s: "F", name: "氟", cat: "halogen", mass: "18.998", ec: "[He] 2s2 2p5", mp: "-219.67 °C", bp: "-188.11 °C", col: 17, row: 2 },
+          { n: 10, s: "Ne", name: "氖", cat: "noble", mass: "20.180", ec: "[He] 2s2 2p6", mp: "-248.59 °C", bp: "-246.08 °C", col: 18, row: 2 },
+          { n: 11, s: "Na", name: "钠", cat: "alkali", mass: "22.990", ec: "[Ne] 3s1", mp: "97.72 °C", bp: "883 °C", col: 1, row: 3 },
+          { n: 12, s: "Mg", name: "镁", cat: "alkaline", mass: "24.305", ec: "[Ne] 3s2", mp: "650 °C", bp: "1090 °C", col: 2, row: 3 },
+          { n: 13, s: "Al", name: "铝", cat: "postmetal", mass: "26.982", ec: "[Ne] 3s2 3p1", mp: "660.32 °C", bp: "2519 °C", col: 13, row: 3 },
+          { n: 14, s: "Si", name: "硅", cat: "metalloid", mass: "28.085", ec: "[Ne] 3s2 3p2", mp: "1414 °C", bp: "3265 °C", col: 14, row: 3 },
+          { n: 15, s: "P", name: "磷", cat: "nonmetal", mass: "30.974", ec: "[Ne] 3s2 3p3", mp: "44.15 °C", bp: "280.5 °C", col: 15, row: 3 },
+          { n: 16, s: "S", name: "硫", cat: "nonmetal", mass: "32.06", ec: "[Ne] 3s2 3p4", mp: "115.21 °C", bp: "444.61 °C", col: 16, row: 3 },
+          { n: 17, s: "Cl", name: "氯", cat: "halogen", mass: "35.45", ec: "[Ne] 3s2 3p5", mp: "-101.5 °C", bp: "-34.04 °C", col: 17, row: 3 },
+          { n: 18, s: "Ar", name: "氩", cat: "noble", mass: "39.948", ec: "[Ne] 3s2 3p6", mp: "-189.34 °C", bp: "-185.85 °C", col: 18, row: 3 },
+          { n: 19, s: "K", name: "钾", cat: "alkali", mass: "39.098", ec: "[Ar] 4s1", mp: "63.38 °C", bp: "759 °C", col: 1, row: 4 },
+          { n: 20, s: "Ca", name: "钙", cat: "alkaline", mass: "40.078", ec: "[Ar] 4s2", mp: "842 °C", bp: "1484 °C", col: 2, row: 4 },
+          { n: 21, s: "Sc", name: "钪", cat: "transition", mass: "44.956", ec: "[Ar] 3d1 4s2", mp: "1541 °C", bp: "2836 °C", col: 3, row: 4 },
+          { n: 22, s: "Ti", name: "钛", cat: "transition", mass: "47.867", ec: "[Ar] 3d2 4s2", mp: "1668 °C", bp: "3287 °C", col: 4, row: 4 },
+          { n: 23, s: "V", name: "钒", cat: "transition", mass: "50.942", ec: "[Ar] 3d3 4s2", mp: "1910 °C", bp: "3407 °C", col: 5, row: 4 },
+          { n: 24, s: "Cr", name: "铬", cat: "transition", mass: "51.996", ec: "[Ar] 3d5 4s1", mp: "1907 °C", bp: "2671 °C", col: 6, row: 4 },
+          { n: 25, s: "Mn", name: "锰", cat: "transition", mass: "54.938", ec: "[Ar] 3d5 4s2", mp: "1246 °C", bp: "2061 °C", col: 7, row: 4 },
+          { n: 26, s: "Fe", name: "铁", cat: "transition", mass: "55.845", ec: "[Ar] 3d6 4s2", mp: "1538 °C", bp: "2862 °C", col: 8, row: 4 },
+          { n: 27, s: "Co", name: "钴", cat: "transition", mass: "58.933", ec: "[Ar] 3d7 4s2", mp: "1495 °C", bp: "2927 °C", col: 9, row: 4 },
+          { n: 28, s: "Ni", name: "镍", cat: "transition", mass: "58.693", ec: "[Ar] 3d8 4s2", mp: "1455 °C", bp: "2913 °C", col: 10, row: 4 },
+          { n: 29, s: "Cu", name: "铜", cat: "transition", mass: "63.546", ec: "[Ar] 3d10 4s1", mp: "1084.62 °C", bp: "2562 °C", col: 11, row: 4 },
+          { n: 30, s: "Zn", name: "锌", cat: "transition", mass: "65.38", ec: "[Ar] 3d10 4s2", mp: "419.53 °C", bp: "907 °C", col: 12, row: 4 },
+          { n: 31, s: "Ga", name: "镓", cat: "postmetal", mass: "69.723", ec: "[Ar] 3d10 4s2 4p1", mp: "29.76 °C", bp: "2204 °C", col: 13, row: 4 },
+          { n: 32, s: "Ge", name: "锗", cat: "metalloid", mass: "72.630", ec: "[Ar] 3d10 4s2 4p2", mp: "938.25 °C", bp: "2833 °C", col: 14, row: 4 },
+          { n: 33, s: "As", name: "砷", cat: "metalloid", mass: "74.922", ec: "[Ar] 3d10 4s2 4p3", mp: "817 °C (升华)", bp: "614 °C (升华)", col: 15, row: 4 },
+          { n: 34, s: "Se", name: "硒", cat: "nonmetal", mass: "78.971", ec: "[Ar] 3d10 4s2 4p4", mp: "221 °C", bp: "685 °C", col: 16, row: 4 },
+          { n: 35, s: "Br", name: "溴", cat: "halogen", mass: "79.904", ec: "[Ar] 3d10 4s2 4p5", mp: "-7.2 °C", bp: "58.8 °C", col: 17, row: 4 },
+          { n: 36, s: "Kr", name: "氪", cat: "noble", mass: "83.798", ec: "[Ar] 3d10 4s2 4p6", mp: "-157.36 °C", bp: "-153.22 °C", col: 18, row: 4 },
+          { n: 37, s: "Rb", name: "铷", cat: "alkali", mass: "85.468", ec: "[Kr] 5s1", mp: "39.31 °C", bp: "688 °C", col: 1, row: 5 },
+          { n: 38, s: "Sr", name: "锶", cat: "alkaline", mass: "87.62", ec: "[Kr] 5s2", mp: "777 °C", bp: "1382 °C", col: 2, row: 5 },
+          { n: 39, s: "Y", name: "钇", cat: "transition", mass: "88.906", ec: "[Kr] 4d1 5s2", mp: "1526 °C", bp: "3336 °C", col: 3, row: 5 },
+          { n: 40, s: "Zr", name: "锆", cat: "transition", mass: "91.224", ec: "[Kr] 4d2 5s2", mp: "1855 °C", bp: "4409 °C", col: 4, row: 5 },
+          { n: 41, s: "Nb", name: "铌", cat: "transition", mass: "92.906", ec: "[Kr] 4d4 5s1", mp: "2477 °C", bp: "4744 °C", col: 5, row: 5 },
+          { n: 42, s: "Mo", name: "钼", cat: "transition", mass: "95.95", ec: "[Kr] 4d5 5s1", mp: "2623 °C", bp: "4639 °C", col: 6, row: 5 },
+          { n: 43, s: "Tc", name: "锝", cat: "transition", mass: "(98)", ec: "[Kr] 4d5 5s2", mp: "2157 °C", bp: "4265 °C", col: 7, row: 5 },
+          { n: 44, s: "Ru", name: "钌", cat: "transition", mass: "101.07", ec: "[Kr] 4d7 5s1", mp: "2334 °C", bp: "4150 °C", col: 8, row: 5 },
+          { n: 45, s: "Rh", name: "铑", cat: "transition", mass: "102.91", ec: "[Kr] 4d8 5s1", mp: "1964 °C", bp: "3695 °C", col: 9, row: 5 },
+          { n: 46, s: "Pd", name: "钯", cat: "transition", mass: "106.42", ec: "[Kr] 4d10", mp: "1554 °C", bp: "2963 °C", col: 10, row: 5 },
+          { n: 47, s: "Ag", name: "银", cat: "transition", mass: "107.87", ec: "[Kr] 4d10 5s1", mp: "961.78 °C", bp: "2162 °C", col: 11, row: 5 },
+          { n: 48, s: "Cd", name: "镉", cat: "transition", mass: "112.41", ec: "[Kr] 4d10 5s2", mp: "321.11 °C", bp: "767 °C", col: 12, row: 5 },
+          { n: 49, s: "In", name: "铟", cat: "postmetal", mass: "114.82", ec: "[Kr] 4d10 5s2 5p1", mp: "156.6 °C", bp: "2072 °C", col: 13, row: 5 },
+          { n: 50, s: "Sn", name: "锡", cat: "postmetal", mass: "118.71", ec: "[Kr] 4d10 5s2 5p2", mp: "231.93 °C", bp: "2602 °C", col: 14, row: 5 },
+          { n: 51, s: "Sb", name: "锑", cat: "metalloid", mass: "121.76", ec: "[Kr] 4d10 5s2 5p3", mp: "630.63 °C", bp: "1587 °C", col: 15, row: 5 },
+          { n: 52, s: "Te", name: "碲", cat: "metalloid", mass: "127.60", ec: "[Kr] 4d10 5s2 5p4", mp: "449.51 °C", bp: "998 °C", col: 16, row: 5 },
+          { n: 53, s: "I", name: "碘", cat: "halogen", mass: "126.90", ec: "[Kr] 4d10 5s2 5p5", mp: "113.7 °C (升华)", bp: "184.3 °C", col: 17, row: 5 },
+          { n: 54, s: "Xe", name: "氙", cat: "noble", mass: "131.29", ec: "[Kr] 4d10 5s2 5p6", mp: "-111.75 °C", bp: "-108.09 °C", col: 18, row: 5 },
+          { n: 55, s: "Cs", name: "铯", cat: "alkali", mass: "132.91", ec: "[Xe] 6s1", mp: "28.44 °C", bp: "670.8 °C", col: 1, row: 6 },
+          { n: 56, s: "Ba", name: "钡", cat: "alkaline", mass: "137.33", ec: "[Xe] 6s2", mp: "727 °C", bp: "1897 °C", col: 2, row: 6 },
+          { n: 72, s: "Hf", name: "铪", cat: "transition", mass: "178.49", ec: "[Xe] 4f14 5d2 6s2", mp: "2233 °C", bp: "4603 °C", col: 4, row: 6 },
+          { n: 73, s: "Ta", name: "钽", cat: "transition", mass: "180.95", ec: "[Xe] 4f14 5d3 6s2", mp: "3017 °C", bp: "5458 °C", col: 5, row: 6 },
+          { n: 74, s: "W", name: "钨", cat: "transition", mass: "183.84", ec: "[Xe] 4f14 5d4 6s2", mp: "3422 °C", bp: "5555 °C", col: 6, row: 6 },
+          { n: 75, s: "Re", name: "铼", cat: "transition", mass: "186.21", ec: "[Xe] 4f14 5d5 6s2", mp: "3186 °C", bp: "5596 °C", col: 7, row: 6 },
+          { n: 76, s: "Os", name: "锇", cat: "transition", mass: "190.23", ec: "[Xe] 4f14 5d6 6s2", mp: "3033 °C", bp: "5012 °C", col: 8, row: 6 },
+          { n: 77, s: "Ir", name: "铱", cat: "transition", mass: "192.22", ec: "[Xe] 4f14 5d7 6s2", mp: "2446 °C", bp: "4131 °C", col: 9, row: 6 },
+          { n: 78, s: "Pt", name: "铂", cat: "transition", mass: "195.08", ec: "[Xe] 4f14 5d9 6s1", mp: "1772 °C", bp: "3825 °C", col: 10, row: 6 },
+          { n: 79, s: "Au", name: "金", cat: "transition", mass: "196.97", ec: "[Xe] 4f14 5d10 6s1", mp: "1064.18 °C", bp: "2856 °C", col: 11, row: 6 },
+          { n: 80, s: "Hg", name: "汞", cat: "transition", mass: "200.59", ec: "[Xe] 4f14 5d10 6s2", mp: "-38.83 °C", bp: "356.73 °C", col: 12, row: 6 },
+          { n: 81, s: "Tl", name: "铊", cat: "postmetal", mass: "204.38", ec: "[Xe] 4f14 5d10 6s2 6p1", mp: "304 °C", bp: "1473 °C", col: 13, row: 6 },
+          { n: 82, s: "Pb", name: "铅", cat: "postmetal", mass: "207.2", ec: "[Xe] 4f14 5d10 6s2 6p2", mp: "327.46 °C", bp: "1749 °C", col: 14, row: 6 },
+          { n: 83, s: "Bi", name: "铋", cat: "postmetal", mass: "208.98", ec: "[Xe] 4f14 5d10 6s2 6p3", mp: "271.4 °C", bp: "1564 °C", col: 15, row: 6 },
+          { n: 84, s: "Po", name: "钋", cat: "postmetal", mass: "(209)", ec: "[Xe] 4f14 5d10 6s2 6p4", mp: "254 °C", bp: "962 °C", col: 16, row: 6 },
+          { n: 85, s: "At", name: "砹", cat: "halogen", mass: "(210)", ec: "[Xe] 4f14 5d10 6s2 6p5", mp: "302 °C (升华)", bp: "337 °C", col: 17, row: 6 },
+          { n: 86, s: "Rn", name: "氡", cat: "noble", mass: "(222)", ec: "[Xe] 4f14 5d10 6s2 6p6", mp: "-71 °C (升华)", bp: "-61.7 °C", col: 18, row: 6 },
+          { n: 87, s: "Fr", name: "钫", cat: "alkali", mass: "(223)", ec: "[Rn] 7s1", mp: "27 °C", bp: "677 °C", col: 1, row: 7 },
+          { n: 88, s: "Ra", name: "镭", cat: "alkaline", mass: "(226)", ec: "[Rn] 7s2", mp: "727 °C", bp: "1737 °C", col: 2, row: 7 },
+          { n: 104, s: "Rf", name: "𬬻", cat: "transition", mass: "(267)", ec: "[Rn] 5f14 6d2 7s2", mp: "2200 °C", bp: "5500 °C", col: 4, row: 7 },
+          { n: 105, s: "Db", name: "𬭊", cat: "transition", mass: "(268)", ec: "[Rn] 5f14 6d3 7s2", mp: "—", bp: "—", col: 5, row: 7 },
+          { n: 106, s: "Sg", name: "𬭳", cat: "transition", mass: "(269)", ec: "[Rn] 5f14 6d4 7s2", mp: "—", bp: "—", col: 6, row: 7 },
+          { n: 107, s: "Bh", name: "𬭛", cat: "transition", mass: "(270)", ec: "[Rn] 5f14 6d5 7s2", mp: "—", bp: "—", col: 7, row: 7 },
+          { n: 108, s: "Hs", name: "𬭶", cat: "transition", mass: "(269)", ec: "[Rn] 5f14 6d6 7s2", mp: "—", bp: "—", col: 8, row: 7 },
+          { n: 109, s: "Mt", name: "鿏", cat: "transition", mass: "(278)", ec: "[Rn] 5f14 6d7 7s2", mp: "—", bp: "—", col: 9, row: 7 },
+          { n: 110, s: "Ds", name: "𬭞", cat: "transition", mass: "(281)", ec: "[Rn] 5f14 6d8 7s2", mp: "—", bp: "—", col: 10, row: 7 },
+          { n: 111, s: "Rg", name: "𬭭", cat: "transition", mass: "(282)", ec: "[Rn] 5f14 6d10 7s1", mp: "—", bp: "—", col: 11, row: 7 },
+          { n: 112, s: "Cn", name: "鿔", cat: "transition", mass: "(285)", ec: "[Rn] 5f14 6d10 7s2", mp: "—", bp: "—", col: 12, row: 7 },
+          { n: 113, s: "Nh", name: "鿭", cat: "postmetal", mass: "(286)", ec: "[Rn] 5f14 6d10 7s2 7p1", mp: "—", bp: "—", col: 13, row: 7 },
+          { n: 114, s: "Fl", name: "𫓧", cat: "postmetal", mass: "(289)", ec: "[Rn] 5f14 6d10 7s2 7p2", mp: "—", bp: "—", col: 14, row: 7 },
+          { n: 115, s: "Mc", name: "镆", cat: "postmetal", mass: "(290)", ec: "[Rn] 5f14 6d10 7s2 7p3", mp: "—", bp: "—", col: 15, row: 7 },
+          { n: 116, s: "Lv", name: "𫟼", cat: "postmetal", mass: "(293)", ec: "[Rn] 5f14 6d10 7s2 7p4", mp: "—", bp: "—", col: 16, row: 7 },
+          { n: 117, s: "Ts", name: "鿬", cat: "halogen", mass: "(294)", ec: "[Rn] 5f14 6d10 7s2 7p5", mp: "—", bp: "—", col: 17, row: 7 },
+          { n: 118, s: "Og", name: "鿫", cat: "noble", mass: "(294)", ec: "[Rn] 5f14 6d10 7s2 7p6", mp: "—", bp: "—", col: 18, row: 7 },
+          { n: 57, s: "La", name: "镧", cat: "lanthanide", mass: "138.91", ec: "[Xe] 5d1 6s2", mp: "920 °C", bp: "3464 °C", col: 3, row: 8 },
+          { n: 58, s: "Ce", name: "铈", cat: "lanthanide", mass: "140.12", ec: "[Xe] 4f1 5d1 6s2", mp: "798 °C", bp: "3443 °C", col: 4, row: 8 },
+          { n: 59, s: "Pr", name: "镨", cat: "lanthanide", mass: "140.91", ec: "[Xe] 4f3 6s2", mp: "931 °C", bp: "3520 °C", col: 5, row: 8 },
+          { n: 60, s: "Nd", name: "钕", cat: "lanthanide", mass: "144.24", ec: "[Xe] 4f4 6s2", mp: "1021 °C", bp: "3074 °C", col: 6, row: 8 },
+          { n: 61, s: "Pm", name: "钷", cat: "lanthanide", mass: "(145)", ec: "[Xe] 4f5 6s2", mp: "1042 °C", bp: "3000 °C", col: 7, row: 8 },
+          { n: 62, s: "Sm", name: "钐", cat: "lanthanide", mass: "150.36", ec: "[Xe] 4f6 6s2", mp: "1072 °C", bp: "1900 °C", col: 8, row: 8 },
+          { n: 63, s: "Eu", name: "铕", cat: "lanthanide", mass: "151.96", ec: "[Xe] 4f7 6s2", mp: "826 °C", bp: "1529 °C", col: 9, row: 8 },
+          { n: 64, s: "Gd", name: "钆", cat: "lanthanide", mass: "157.25", ec: "[Xe] 4f7 5d1 6s2", mp: "1313 °C", bp: "3273 °C", col: 10, row: 8 },
+          { n: 65, s: "Tb", name: "铽", cat: "lanthanide", mass: "158.93", ec: "[Xe] 4f9 6s2", mp: "1356 °C", bp: "3230 °C", col: 11, row: 8 },
+          { n: 66, s: "Dy", name: "镝", cat: "lanthanide", mass: "162.50", ec: "[Xe] 4f10 6s2", mp: "1412 °C", bp: "2567 °C", col: 12, row: 8 },
+          { n: 67, s: "Ho", name: "钬", cat: "lanthanide", mass: "164.93", ec: "[Xe] 4f11 6s2", mp: "1474 °C", bp: "2700 °C", col: 13, row: 8 },
+          { n: 68, s: "Er", name: "铒", cat: "lanthanide", mass: "167.26", ec: "[Xe] 4f12 6s2", mp: "1529 °C", bp: "2868 °C", col: 14, row: 8 },
+          { n: 69, s: "Tm", name: "铥", cat: "lanthanide", mass: "168.93", ec: "[Xe] 4f13 6s2", mp: "1545 °C", bp: "1950 °C", col: 15, row: 8 },
+          { n: 70, s: "Yb", name: "镱", cat: "lanthanide", mass: "173.05", ec: "[Xe] 4f14 6s2", mp: "824 °C", bp: "1196 °C", col: 16, row: 8 },
+          { n: 71, s: "Lu", name: "镥", cat: "lanthanide", mass: "174.97", ec: "[Xe] 4f14 5d1 6s2", mp: "1663 °C", bp: "4027 °C", col: 17, row: 8 },
+          { n: 89, s: "Ac", name: "锕", cat: "actinide", mass: "(227)", ec: "[Rn] 6d1 7s2", mp: "1050 °C", bp: "3198 °C", col: 3, row: 9 },
+          { n: 90, s: "Th", name: "钍", cat: "actinide", mass: "232.04", ec: "[Rn] 6d2 7s2", mp: "1828 °C", bp: "4785 °C", col: 4, row: 9 },
+          { n: 91, s: "Pa", name: "镤", cat: "actinide", mass: "231.04", ec: "[Rn] 5f2 6d1 7s2", mp: "1561 °C", bp: "4027 °C", col: 5, row: 9 },
+          { n: 92, s: "U", name: "铀", cat: "actinide", mass: "238.03", ec: "[Rn] 5f3 6d1 7s2", mp: "1135 °C", bp: "4131 °C", col: 6, row: 9 },
+          { n: 93, s: "Np", name: "镎", cat: "actinide", mass: "(237)", ec: "[Rn] 5f4 6d1 7s2", mp: "644 °C", bp: "3902 °C", col: 7, row: 9 },
+          { n: 94, s: "Pu", name: "钚", cat: "actinide", mass: "(244)", ec: "[Rn] 5f6 7s2", mp: "639.4 °C", bp: "3228 °C", col: 8, row: 9 },
+          { n: 95, s: "Am", name: "镅", cat: "actinide", mass: "(243)", ec: "[Rn] 5f7 7s2", mp: "1449 °C", bp: "2600 °C", col: 9, row: 9 },
+          { n: 96, s: "Cm", name: "锔", cat: "actinide", mass: "(247)", ec: "[Rn] 5f7 6d1 7s2", mp: "1340 °C", bp: "3110 °C", col: 10, row: 9 },
+          { n: 97, s: "Bk", name: "锫", cat: "actinide", mass: "(247)", ec: "[Rn] 5f9 7s2", mp: "1052 °C", bp: "2325 °C", col: 11, row: 9 },
+          { n: 98, s: "Cf", name: "锎", cat: "actinide", mass: "(251)", ec: "[Rn] 5f10 7s2", mp: "900 °C", bp: "1472 °C", col: 12, row: 9 },
+          { n: 99, s: "Es", name: "锿", cat: "actinide", mass: "(252)", ec: "[Rn] 5f11 7s2", mp: "860 °C", bp: "1260 °C", col: 13, row: 9 },
+          { n: 100, s: "Fm", name: "镄", cat: "actinide", mass: "(257)", ec: "[Rn] 5f12 7s2", mp: "1527 °C", bp: "—", col: 14, row: 9 },
+          { n: 101, s: "Md", name: "钔", cat: "actinide", mass: "(258)", ec: "[Rn] 5f13 7s2", mp: "827 °C", bp: "—", col: 15, row: 9 },
+          { n: 102, s: "No", name: "锘", cat: "actinide", mass: "(259)", ec: "[Rn] 5f14 7s2", mp: "827 °C", bp: "—", col: 16, row: 9 },
+          { n: 103, s: "Lr", name: "铹", cat: "actinide", mass: "(266)", ec: "[Rn] 5f14 7s2 7p1", mp: "1627 °C", bp: "—", col: 17, row: 9 }
+        ],
+        catNames: {
+          alkali: "碱金属",
+          alkaline: "碱土金属",
+          transition: "过渡金属",
+          postmetal: "后过渡金属",
+          metalloid: "类金属",
+          nonmetal: "非金属",
+          halogen: "卤素",
+          noble: "稀有气体",
+          lanthanide: "镧系元素",
+          actinide: "锕系元素"
+        },
+        selectedElement: null,
+        showDetailPanel: false,
+        isDark: false
+      },
+      computed: {
+        themeIcon() {
+          return this.isDark ? '☀️' : '🌙';
+        },
+        themeLabel() {
+          return this.isDark ? '浅色模式' : '深色模式';
+        }
+      },
+      created() {
+        var savedTheme = 'light';
+        try {
+          savedTheme = localStorage.getItem('periodic-table-theme') || 'light';
+        } catch (e) { }
+        this.isDark = savedTheme === 'dark';
+        this.applyTheme();
+      },
+      mounted() {
+        document.addEventListener('dblclick', this.handleDblClick);
+        document.addEventListener('fullscreenchange', this.handleFullscreenChange);
+        document.addEventListener('keydown', this.handleKeydown);
+      },
+      beforeDestroy() {
+        document.removeEventListener('dblclick', this.handleDblClick);
+        document.removeEventListener('fullscreenchange', this.handleFullscreenChange);
+        document.removeEventListener('keydown', this.handleKeydown);
+      },
+      methods: {
+        applyTheme() {
+          if (this.isDark) {
+            document.body.classList.add('dark');
+          } else {
+            document.body.classList.remove('dark');
+          }
+          try {
+            localStorage.setItem('periodic-table-theme', this.isDark ? 'dark' : 'light');
+          } catch (e) { }
+        },
+        toggleTheme() {
+          this.isDark = !this.isDark;
+          this.applyTheme();
+        },
+        showDetail(el) {
+          this.selectedElement = el;
+          this.showDetailPanel = true;
+        },
+        hideDetail() {
+          this.showDetailPanel = false;
+          this.selectedElement = null;
+        },
+        handleDblClick(e) {
+          if (e.target.closest('.detail-panel') || e.target.closest('.detail-overlay') || e.target.closest('.theme-toggle')) return;
+          if (!document.fullscreenElement) {
+            var el = document.documentElement;
+            if (el.requestFullscreen) el.requestFullscreen();
+            else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+            else if (el.msRequestFullscreen) el.msRequestFullscreen();
+          } else {
+            if (document.exitFullscreen) document.exitFullscreen();
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+            else if (document.msExitFullscreen) document.msExitFullscreen();
+          }
+        },
+        handleFullscreenChange() {
+          document.body.classList.toggle('fullscreen', !!document.fullscreenElement);
+        },
+        handleKeydown(e) {
+          if (e.key === 'Escape' && !document.fullscreenElement) {
+            this.hideDetail();
+          }
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

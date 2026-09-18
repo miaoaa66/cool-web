@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
+  <title>欢迎光临</title>
+</head>
+<body>
+<div id="app">
+  <header class="site-header">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="#top" :aria-label="'返回' + site.brand.name + '首页'">
+        <span class="brand-mark" aria-hidden="true">{{ site.brand.mark }}</span>
+        <span>{{ site.brand.name }}</span>
+      </a>
+      <div class="nav-links">
+        <a v-for="item in site.nav.items" :key="item.href" :href="item.href">{{ item.label }}</a>
+      </div>
+      <a class="nav-action" :href="site.nav.cta.href">{{ site.nav.cta.label }}</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title" :style="heroStyle">
+      <div class="hero-inner">
+        <p class="eyebrow">{{ site.hero.eyebrow }}</p>
+        <h1 id="hero-title">{{ site.hero.title }}</h1>
+        <p class="hero-copy">{{ site.hero.copy }}</p>
+        <div class="hero-actions">
+          <a
+            v-for="(action, idx) in site.hero.actions"
+            :key="idx"
+            class="button"
+            :class="action.type === 'primary' ? 'button-primary' : 'button-secondary'"
+            :href="action.href"
+          >
+            <svg v-if="action.type === 'primary'" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+              <path d="M8 2v4M16 2v4M3 10h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"></path>
+            </svg>
+            <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+            <span>{{ action.label }}</span>
+          </a>
+        </div>
+        <div class="hero-meta" aria-label="餐厅关键信息">
+          <div class="meta-item" v-for="(item, idx) in site.hero.meta" :key="idx">
+            <span>{{ item.label }}</span>
+            <strong>{{ item.value }}</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="story" class="section section-light" aria-labelledby="story-title">
+      <div class="section-inner story-grid">
+        <div class="story-photo">
+          <img :src="site.story.photo" :alt="site.story.photoAlt" loading="lazy">
+        </div>
+        <div class="story-content">
+          <p class="eyebrow">{{ site.story.eyebrow }}</p>
+          <h2 id="story-title">{{ site.story.title }}</h2>
+          <p v-for="(para, idx) in site.story.paragraphs" :key="idx">{{ para }}</p>
+          <div class="signature">
+            <div class="chef-avatar">
+              <img :src="site.story.chef.avatar" :alt="site.story.chef.avatarAlt" loading="lazy">
+            </div>
+            <div>
+              <strong>{{ site.story.chef.name }}</strong>
+              <span>{{ site.story.chef.title }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu" class="section section-deep" aria-labelledby="menu-title">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ site.menu.eyebrow }}</p>
+            <h2 id="menu-title">{{ site.menu.title }}</h2>
+          </div>
+          <p>{{ site.menu.description }}</p>
+        </div>
+        <div class="menu-grid">
+          <article class="dish-card" v-for="(dish, idx) in site.menu.dishes" :key="idx">
+            <div class="dish-photo">
+              <img :src="dish.photo" :alt="dish.alt" loading="lazy">
+            </div>
+            <div class="dish-body">
+              <h3>{{ dish.name }}</h3>
+              <p>{{ dish.description }}</p>
+              <div class="dish-foot">
+                <span>{{ dish.tag }}</span>
+                <span>{{ dish.note }}</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="space" class="section section-light" aria-labelledby="space-title">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ site.space.eyebrow }}</p>
+            <h2 id="space-title">{{ site.space.title }}</h2>
+          </div>
+          <p>{{ site.space.description }}</p>
+        </div>
+        <div class="space-layout">
+          <figure class="space-main">
+            <img :src="site.space.main.photo" :alt="site.space.main.alt" loading="lazy">
+            <figcaption>{{ site.space.main.caption }}</figcaption>
+          </figure>
+          <div class="space-side">
+            <figure v-for="(item, idx) in site.space.side" :key="idx">
+              <img :src="item.photo" :alt="item.alt" loading="lazy">
+              <figcaption>{{ item.caption }}</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reserve" class="section section-muted" aria-labelledby="reserve-title">
+      <div class="section-inner reserve-grid">
+        <div class="reserve-copy">
+          <p class="eyebrow">{{ site.reserve.eyebrow }}</p>
+          <h2 id="reserve-title">{{ site.reserve.title }}</h2>
+          <p>{{ site.reserve.copy }}</p>
+          <ul class="reserve-list">
+            <li v-for="(feature, idx) in site.reserve.features" :key="idx">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span>{{ feature }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="reserve-panel" id="reserveForm" aria-label="预约表单" @submit.prevent="submitForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">称呼</label>
+              <input id="name" name="称呼" type="text" placeholder="请输入您的称呼" autocomplete="name" required v-model="form.name">
+            </div>
+            <div class="field">
+              <label for="phone">联系电话</label>
+              <input id="phone" name="联系电话" type="tel" placeholder="用于确认预约" autocomplete="tel" required v-model="form.phone">
+            </div>
+            <div class="field">
+              <label for="date">用餐日期</label>
+              <input id="date" name="用餐日期" type="date" required v-model="form.date">
+            </div>
+            <div class="field">
+              <label for="time">到店时间</label>
+              <select id="time" name="到店时间" required v-model="form.time">
+                <option value="">请选择时间</option>
+                <option v-for="t in site.reserve.timeOptions" :key="t">{{ t }}</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="guests">用餐人数</label>
+              <select id="guests" name="用餐人数" required v-model="form.guests">
+                <option value="">请选择人数</option>
+                <option v-for="g in site.reserve.guestOptions" :key="g">{{ g }}</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="room">席位偏好</label>
+              <select id="room" name="席位偏好" required v-model="form.room">
+                <option value="">请选择席位</option>
+                <option v-for="r in site.reserve.roomOptions" :key="r">{{ r }}</option>
+              </select>
+            </div>
+            <div class="field field-wide">
+              <label for="note">特殊需求</label>
+              <textarea id="note" name="特殊需求" placeholder="可填写忌口、纪念日、儿童座椅或酒水偏好" v-model="form.note"></textarea>
+            </div>
+          </div>
+          <button class="button button-primary" type="submit" style="width: 100%; margin-top: 22px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+              <path d="M22 2 11 13"></path>
+              <path d="m22 2-7 20-4-9-9-4 20-7Z"></path>
+            </svg>
+            {{ site.reserve.submitText }}
+          </button>
+          <p class="form-note">{{ site.reserve.formNote }}</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>{{ site.footer.brand }}</strong>
+        <span>{{ site.footer.address }}</span>
+      </div>
+      <div>电话：{{ site.footer.phone }} · {{ site.footer.hours }}</div>
+    </div>
+  </footer>
+
+  <div class="toast" :class="{ 'is-visible': toastVisible }" role="status" aria-live="polite">{{ site.reserve.toastMessage }}</div>
+</div>
+
+  <script src="./static/vue.2.6.14.js"></script>
+  <script src="./config.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        site: window.SITE_CONFIG,
+        form: {
+          name: '',
+          phone: '',
+          date: '',
+          time: '',
+          guests: '',
+          room: '',
+          note: ''
+        },
+        toastVisible: false
+      },
+      computed: {
+        heroStyle: function() {
+          return {
+            backgroundImage: 'linear-gradient(90deg, rgba(20,17,15,0.9), rgba(20,17,15,0.44) 48%, rgba(20,17,15,0.18)), linear-gradient(180deg, rgba(20,17,15,0.3), rgba(20,17,15,0.82)), url("' + this.site.hero.bgImage + '")'
+          };
+        }
+      },
+      mounted: function() {
+        document.title = this.site.pageTitle;
+      },
+      watch: {
+        'site.pageTitle': function(val) {
+          document.title = val;
+        }
+      },
+      methods: {
+        submitForm: function() {
+          var form = document.getElementById('reserveForm');
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+          this.toastVisible = true;
+          this.form = { name: '', phone: '', date: '', time: '', guests: '', room: '', note: '' };
+          var self = this;
+          setTimeout(function() {
+            self.toastVisible = false;
+          }, 3600);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+:root {
+  --key-unit: 46px;
+  --key-gap: 4px;
+  --key-height: 46px;
+  --key-radius: 8px;
+  --typing-w: calc(var(--key-unit) * 15 + var(--key-gap) * 14);
+  --cluster-w: calc(var(--key-unit) * 3 + var(--key-gap) * 2);
+  --col-gap: calc(var(--key-unit) * 0.4 + var(--key-gap));
+  --func-internal-gap: calc(var(--key-gap) * 0.5);
+  --func-inter-gap: calc((var(--key-unit) * 2 + var(--key-gap) * 9.5) / 3);
+  --func-row-w: calc(var(--typing-w) + var(--col-gap) + var(--cluster-w));
+  --key-bg-top: #ffffff;
+  --key-bg-bottom: #e2e2e6;
+  --key-border: #c7c7cc;
+  --key-border-dark: #a8a8ad;
+  --key-text: #1d1d1f;
+  --key-text-secondary: #6e6e73;
+  --key-active-bg: #007aff;
+  --key-mod-bg-top: #ebebef;
+  --key-mod-bg-bottom: #d1d1d6;
+  --kb-bg: #dcdce0;
+  --kb-border: #c7c7cc;
+  --kb-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  --key-pressed-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #636e72 0%, #2d3436 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 30px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.keyboard-container {
+  perspective: 1200px;
+}
+
+.keyboard {
+  background: var(--kb-bg);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: var(--kb-shadow);
+  border: 1px solid var(--kb-border);
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--key-gap);
+}
+
+.kb-row {
+  display: flex;
+  gap: var(--key-gap);
+  height: var(--key-height);
+}
+
+.kb-main {
+  display: flex;
+  gap: calc(var(--key-unit) * 0.4 + var(--key-gap));
+  align-items: flex-start;
+}
+
+.kb-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--key-gap);
+}
+
+.kb-typing {
+  flex-shrink: 0;
+}
+
+.kb-cluster {
+  flex-shrink: 0;
+}
+
+.kb-numpad {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(4, var(--key-unit));
+  grid-template-rows: repeat(5, var(--key-height));
+  gap: var(--key-gap);
+}
+
+.kb-numpad .key {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.np-c1-r1 { grid-column: 1; grid-row: 1; }
+.np-c2-r1 { grid-column: 2; grid-row: 1; }
+.np-c3-r1 { grid-column: 3; grid-row: 1; }
+.np-c4-r1 { grid-column: 4; grid-row: 1; }
+
+.np-c1-r2 { grid-column: 1; grid-row: 2; }
+.np-c2-r2 { grid-column: 2; grid-row: 2; }
+.np-c3-r2 { grid-column: 3; grid-row: 2; }
+.np-c4-r2-3 { grid-column: 4; grid-row: 2 / span 2; }
+
+.np-c1-r3 { grid-column: 1; grid-row: 3; }
+.np-c2-r3 { grid-column: 2; grid-row: 3; }
+.np-c3-r3 { grid-column: 3; grid-row: 3; }
+
+.np-c1-r4 { grid-column: 1; grid-row: 4; }
+.np-c2-r4 { grid-column: 2; grid-row: 4; }
+.np-c3-r4 { grid-column: 3; grid-row: 4; }
+.np-c4-r4-5 { grid-column: 4; grid-row: 4 / span 2; }
+
+.np-c1-2-r5 { grid-column: 1 / span 2; grid-row: 5; }
+.np-c3-r5 { grid-column: 3; grid-row: 5; }
+
+.kb-row-func {
+  width: var(--func-row-w);
+  justify-content: flex-start;
+  gap: 0;
+}
+
+.kb-func-group {
+  display: flex;
+  gap: var(--func-internal-gap);
+}
+
+.kb-func-group:nth-child(2),
+.kb-func-group:nth-child(3),
+.kb-func-group:nth-child(4) {
+  margin-left: var(--func-inter-gap);
+}
+
+.kb-func-group:nth-child(5) {
+  margin-left: var(--col-gap);
+}
+
+.kb-row-cluster {
+  justify-content: flex-end;
+}
+
+.kb-row-arrow-up {
+  justify-content: flex-start;
+}
+
+.kb-row-empty {
+  pointer-events: none;
+}
+
+.key {
+  width: var(--key-unit);
+  height: var(--key-height);
+  background: linear-gradient(180deg, var(--key-bg-top) 0%, var(--key-bg-bottom) 100%);
+  border: 1px solid var(--key-border);
+  border-bottom-width: 2px;
+  border-radius: var(--key-radius);
+  color: var(--key-text);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.06s ease, box-shadow 0.06s ease, background 0.1s ease;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  line-height: 1.1;
+  font-family: inherit;
+}
+
+.key:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #ececef 100%);
+}
+
+.key:active,
+.key.pressed {
+  transform: translateY(2px);
+  box-shadow: var(--key-pressed-shadow);
+  background: linear-gradient(180deg, #d8d8dc 0%, #c8c8cd 100%);
+  border-bottom-width: 1px;
+}
+
+.key-top {
+  position: absolute;
+  top: 3px;
+  font-size: 10px;
+  color: var(--key-text-secondary);
+  line-height: 1;
+  font-weight: 500;
+}
+
+.key-bot {
+  position: absolute;
+  bottom: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--key-text);
+  line-height: 1;
+}
+
+.key-letter {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.key-func {
+  background: linear-gradient(180deg, var(--key-mod-bg-top) 0%, var(--key-mod-bg-bottom) 100%);
+  color: var(--key-text-secondary);
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.key-func:hover {
+  background: linear-gradient(180deg, #f0f0f2 0%, #d9d9de 100%);
+}
+
+.key-mod {
+  background: linear-gradient(180deg, var(--key-mod-bg-top) 0%, var(--key-mod-bg-bottom) 100%);
+  color: var(--key-text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.key-mod:hover {
+  background: linear-gradient(180deg, #f0f0f2 0%, #d9d9de 100%);
+}
+
+.key-nav {
+  background: linear-gradient(180deg, var(--key-mod-bg-top) 0%, var(--key-mod-bg-bottom) 100%);
+  color: var(--key-text-secondary);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.key-arrow {
+  background: linear-gradient(180deg, var(--key-mod-bg-top) 0%, var(--key-mod-bg-bottom) 100%);
+  color: var(--key-text-secondary);
+  font-size: 14px;
+}
+
+.key-enter {
+  background: linear-gradient(180deg, var(--key-mod-bg-top) 0%, var(--key-mod-bg-bottom) 100%);
+  color: var(--key-text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.key-empty {
+  visibility: hidden;
+}
+
+.key-wide-1-25 { width: calc(var(--key-unit) * 1.25 + var(--key-gap) * 0.25); }
+.key-wide-1-5  { width: calc(var(--key-unit) * 1.5 + var(--key-gap) * 0.5); }
+.key-wide-1-75 { width: calc(var(--key-unit) * 1.75 + var(--key-gap) * 0.75); }
+.key-wide-2    { width: calc(var(--key-unit) * 2 + var(--key-gap) * 1); }
+.key-wide-2-25 { width: calc(var(--key-unit) * 2.25 + var(--key-gap) * 1.25); }
+.key-wide-2-75 { width: calc(var(--key-unit) * 2.75 + var(--key-gap) * 1.75); }
+.key-wide-6-25 { width: calc(var(--key-unit) * 6.25 + var(--key-gap) * 5.25); }
+
+.key.active-blue {
+  background: linear-gradient(180deg, #0a84ff 0%, #0066cc 100%) !important;
+  color: white !important;
+  transform: translateY(2px);
+  box-shadow: 0 0 12px rgba(10, 132, 255, 0.5), var(--key-pressed-shadow);
+  border-color: #0055aa;
+}
+
+.key.active-blue .key-top,
+.key.active-blue .key-bot {
+  color: white !important;
+}
+
+.key-display {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  padding: 14px 28px;
+  color: #fff;
+  min-width: 240px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.key-display-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  display: block;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.key-display-value {
+  font-size: 22px;
+  font-weight: 600;
+  color: #00d4ff;
+  text-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --key-unit: 38px;
+    --key-height: 38px;
+    --key-radius: 7px;
+    --key-gap: 3px;
+  }
+  .key { font-size: 12px; }
+  .key-letter { font-size: 13px; }
+  .key-top { font-size: 9px; }
+  .key-bot { font-size: 11px; }
+  .key-func { font-size: 9px; }
+  .key-mod { font-size: 10px; }
+  .key-nav { font-size: 9px; }
+  .key-arrow { font-size: 12px; }
+}
+
+@media (max-width: 980px) {
+  :root {
+    --key-unit: 30px;
+    --key-height: 30px;
+    --key-radius: 6px;
+    --key-gap: 3px;
+  }
+  .key { font-size: 11px; }
+  .key-letter { font-size: 12px; }
+  .key-top { font-size: 8px; top: 2px; }
+  .key-bot { font-size: 10px; bottom: 3px; }
+  .key-func { font-size: 8px; }
+  .key-mod { font-size: 9px; }
+  .key-nav { font-size: 8px; }
+  .key-arrow { font-size: 10px; }
+  .key-enter { font-size: 9px; }
+  .keyboard { padding: 10px 12px; border-radius: 10px; }
+}
+
+@media (max-width: 800px) {
+  :root {
+    --key-unit: 22px;
+    --key-height: 22px;
+    --key-radius: 5px;
+    --key-gap: 2px;
+  }
+  .key { font-size: 9px; border-bottom-width: 1px; }
+  .key-letter { font-size: 10px; }
+  .key-top { font-size: 7px; top: 1px; }
+  .key-bot { font-size: 8px; bottom: 2px; }
+  .key-func { font-size: 7px; }
+  .key-mod { font-size: 8px; }
+  .key-nav { font-size: 7px; }
+  .key-arrow { font-size: 9px; }
+  .key-enter { font-size: 7px; }
+  .keyboard { padding: 8px; border-radius: 8px; }
+}
+
+
