@@ -83,7 +83,7 @@
 - [https://www.shadow-bling.com/](https://www.shadow-bling.com/)
 - [https://www.wonderwindows.com.au/](https://www.wonderwindows.com.au/)
 - [https://qbitcapital.xyz](https://qbitcapital.xyz)
-
+- [https://miora.design/home](https://miora.design/home)
 
 
 
